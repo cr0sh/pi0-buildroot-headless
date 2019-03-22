@@ -20,6 +20,16 @@ dtoverlay=pi3-miniuart-bt
 __EOF__
 		fi
 		;;
+		--add-pi0-dwc2-overlay)
+		if ! grep -qE '^dtoverlay=' "${BINARIES_DIR}/rpi-firmware/config.txt"; then
+			echo "Adding 'dtoverlay=dwc2' to config.txt (enables OTG support)."
+			cat << __EOF__ >> "${BINARIES_DIR}/rpi-firmware/config.txt"
+
+# enables OTG support for zero
+dtoverlay=dwc2
+__EOF__
+		fi
+		;;
 		--aarch64)
 		# Run a 64bits kernel (armv8)
 		sed -e '/^kernel=/s,=.*,=Image,' -i "${BINARIES_DIR}/rpi-firmware/config.txt"
